@@ -32,8 +32,9 @@ int main(void) {
     body[i] = getc(infile);
     printf("%d", body[i]);
   
-   }
-
+  }
+  
+  //Hej milo, gillar du hingstar?!
 }
     // CH = getc(infile);
     //printf("%c\n",ch);
