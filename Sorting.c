@@ -33,7 +33,7 @@ int main(void) {
     printf("%d", body[i]);
   
   }
-  //heeeej  
+  //hej igen
 
 }
     // CH = getc(infile);
