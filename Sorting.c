@@ -35,6 +35,7 @@ int main(void) {
   }
   
   //Hej milo, gillar du hingstar?!sdfjxsndjfnsdjfnsdjn
+  //Hej Hampus!
 }
     // CH = getc(infile);
     //printf("%c\n",ch);
