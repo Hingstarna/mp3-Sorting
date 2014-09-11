@@ -33,7 +33,9 @@ int main(void) {
     printf("%d", body[i]);
   
   }
+
   //hej igen
+
 
 }
     // CH = getc(infile);
