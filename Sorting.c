@@ -21,7 +21,7 @@ int main(void) {
   for (int i = 5; i < 10; i++){
     header[i] = header[i];
     size += header[i];
-    if (i < 9)
+    // if (i < 9)
       size = size << 7;
     
   }
