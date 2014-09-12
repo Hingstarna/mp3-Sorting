@@ -1,51 +1,47 @@
 #include <stdio.h>
 
-char header[10];
-int size = 0;
-FILE *infile;
+//Calculate the size of the header
+int get_header_size(char * header) {
+  int size = 0;
+  for (int i = 5; i < 10; i++){
+    header[i] = header[i] & 127;
+    size += header[i];
+    if (i < 9)
+      size = size << 7;
+  }
+  return size;
+}
 
-int main(void) {
+//Save the first 10 bits of the mp3 file (the header)
+void get_header(FILE * infile,char * header) {
+  
+  for (int i = 0; i < 10; i++){
+    header[i] = getc(infile);
+  }
+}
+
+//Sorts mp3 files och så.
+void sort_file(char file_name[]) {
+  
+  FILE *infile;
+  char header[10];
+  int header_size = 0;
+
   infile = fopen("music0.mp3", "r");
   if (infile == NULL) {
     puts("File not found");
   }
-  
-  char ch;
-
-  for (int i = 0; i < 10; i++){
-    ch = getc(infile);
-    header[i] = ch;
-    printf("%d ",ch);
-  }
-  
-  for (int i = 5; i < 10; i++){
-    header[i] = header[i];
-    size += header[i];
-    if (i < 9)
-      size = size << 7;
-    
-  }
  
-  int body[size];
+  get_header(infile,header);
 
-  for (int i = 10; i < size; ++i){
-    body[i] = getc(infile);
-    printf("%d", body[i]);
+  header_size = get_header_size(header);
   
-  }
-  //  //heeeej dawdawdawd 
-
+  printf("%d",header_size);
 }
-    // CH = getc(infile);
-    //printf("%c\n",ch);
-    /*
-    for(int i = 5; i < 10; i++){
-      size += sizeOfFile[i];
-      size = size << 7;
-    */
-    
-  //    fseek(infile, 0,SEEK_CUR);
-    
-  //    printf("id: %c%c%c%c%c\nflag:%c\nsize:%c%c%c%c\n",h.id[0],h.id[1],h.id[2],h.id[3],h.id[4],h.flag, h.size[0], h.size[1], h.size[2], h.size[3]);
 
 
+int main(void) {
+  char name[10] = "music0.mp3";
+  sort_file(name);
+  return 0;
+}
