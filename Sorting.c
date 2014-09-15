@@ -1,43 +1,56 @@
+/*
+  H20 sum_header_size 1 & 2
+  M36 get_header
+  M38
+*/
+
 #include <stdio.h>
 #include <dirent.h>
+#include "song.h"
 #define MAX_SIZE 100
 
-struct song {
-  char artist[MAX_SIZE]; //fix size later
-  char title[MAX_SIZE];
-  char album[MAX_SIZE];
-  char year[MAX_SIZE];
-};
 //Calculate the size of the header
-int get_header_size(char * header) {
-  int size = 0;
+int sum_header_size(char *header, int start_value) {//value
+  //int start_value = 0;
+  for (int i = 5; i < 10; i++) {
+    header[i] = header[i] & 127;
+    start_value += header[i];
+    if (i < 9) { 
+      start_value = start_value << 7;
+    }
+  }
+  printf("%d",start_value);
+  return start_value;
+}
+//Calculate the size of the header, using reference.
+void sum_header_size2(char *header, int *start_value) {
   for (int i = 5; i < 10; i++){
     header[i] = header[i] & 127;
-    size += header[i];
-    if (i < 9)
-      size = size << 7;
+    *start_value += header[i];
+    if (i < 9) {
+      *start_value = *start_value << 7;
+    }
   }
-  printf("%d",size);
-  return size;
+  printf("%d",*start_value);
 }
 
 //Save the first 10 bits of the mp3 file (the header)
-void get_header(FILE* infile,char* header) {
-  
+void get_header(FILE* infile, char *header) {
   for (int i = 0; i < 10; i++){
-    header[i] = getc(infile);
+    header[i] = getc(infile);    
+    //*(header+i) = getc(infile);
   }
 }
 
 
-void load_frames(FILE* infile,char* frames, int size) {
+void load_frames(FILE* infile, char* frames, int size) {
   for (int i = 0; i < size;i++) {
     frames[i] = getc(infile);
     //    printf("%c",frames[i]);
   }
 }
 
-void search_frames(struct song* s,int size, char* frames) {
+void search_frames(int size, char* frames) {
   for (int i = 0; i < size; i++) {
     if (frames[i] == 'T' && frames[i+1] == 'P' && frames[i+2] == 'E' && frames[i+3] == '1') {
       int frame_size = 0;
@@ -65,14 +78,12 @@ void search_frames(struct song* s,int size, char* frames) {
   }
 }
 
-
 //Sorts mp3 files och så.
 void sort_file(char file_name[]) {
   
   FILE* infile;
   char header[10];
   int header_size = 0;
-
  
   infile = fopen("music0.mp3", "r");
   if (infile == NULL) {
@@ -81,14 +92,20 @@ void sort_file(char file_name[]) {
  
   get_header(infile,header);
 
-  header_size = get_header_size(header);
+  //Value
+  //header_size = sum_header_size(header,header_size);
+
+  //Reference
+  sum_header_size2(header,&header_size);
+  
+  
   
   char frames[header_size];
   load_frames(infile,frames,header_size);
-  printf("%c%c%c\n",frames[0],frames[1],frames[2]);
+  //printf("%c%c%c\n",frames[0],frames[1],frames[2]);
   //  printf("%d",header_size);
-  struct song s;
-  search_frames(&s,header_size,frames);
+  //  struct song s;
+  search_frames(header_size,frames);
 
   fclose(infile);
 }
@@ -101,7 +118,7 @@ void read_dir(char* path) {
     while ((dir = readdir(d)) != NULL) {
       printf("%s\n",dir->d_name);
     }
-  } else puts("fel");
+  } else {puts("fel");}
   closedir(d);
 }
 
