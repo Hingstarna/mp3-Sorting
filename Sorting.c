@@ -10,28 +10,19 @@
 #define MAX_SIZE 100
 
 //Calculate the size of the header
-int sum_header_size(char *header, int start_value) {//value
-  //int start_value = 0;
-  for (int i = 5; i < 10; i++) {
-    header[i] = header[i] & 127;
-    start_value += header[i];
-    if (i < 9) { 
-      start_value = start_value << 7;
-    }
-  }
-  printf("%d",start_value);
-  return start_value;
-}
-//Calculate the size of the header, using reference.
-void sum_header_size2(char *header, int *start_value) {
+<<<<<<< HEAD
+
+int get_header_size(char * header) {
+  int size = 0;
   for (int i = 5; i < 10; i++){
     header[i] = header[i] & 127;
-    *start_value += header[i];
-    if (i < 9) {
-      *start_value = *start_value << 7;
-    }
-  }
-  printf("%d",*start_value);
+    size += header[i];
+    // if (i < 9)
+      size = size << 7
+  
+}
+  return size;
+
 }
 
 //Save the first 10 bits of the mp3 file (the header)
@@ -78,10 +69,13 @@ void search_frames(int size, char* frames) {
   }
 }
 
+
 //Sorts mp3 files och så.
 void sort_file(char file_name[]) {
+
   
   FILE* infile;
+
   char header[10];
   int header_size = 0;
  
@@ -130,3 +124,5 @@ int main(void) {
   s = create_song("yung lean", "super gangsta rap", "ginsen strip", "1996");
   return 0;
 }
+
+
