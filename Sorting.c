@@ -10,7 +10,7 @@
 #define MAX_SIZE 100
 
 //Calculate the size of the header
-<<<<<<< HEAD
+
 
 int get_header_size(char * header) {
   int size = 0;
