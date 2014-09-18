@@ -110,9 +110,11 @@ void read_dir(char* path) {
 }
 
 int main(void) {
-  char name[10] = "music0.mp3";
-  sort_file(name);
+  //char name[10] = "music0.mp3";
+ // sort_file(name);
   //read_dir("/home/micael/Downloads/");
+  Struct song s;
+  s = create_song("yung lean", "super gangsta rap", "ginsen strip", "1996");
   return 0;
 }
 
