@@ -1,14 +1,16 @@
 #include <stdio.h>
 
 //Calculate the size of the header
+
 int get_header_size(char * header) {
   int size = 0;
   for (int i = 5; i < 10; i++){
     header[i] = header[i] & 127;
     size += header[i];
     // if (i < 9)
-      size = size << 7;
-  }
+      size = size << 7
+  
+}
   return size;
 }
 
@@ -20,9 +22,12 @@ void get_header(FILE * infile,char * header) {
   }
 }
 
+
 //Sorts mp3 files och så.
 void sort_file(char file_name[]) {
-  
+
+
+ 
   FILE *infile;
   char header[10];
   int header_size = 0;
@@ -45,3 +50,5 @@ int main(void) {
   sort_file(name);
   return 0;
 }
+
+
