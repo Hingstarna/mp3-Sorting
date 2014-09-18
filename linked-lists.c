@@ -12,7 +12,7 @@ struct list {
 
 typedef struct list *List;
 
-List mklist() {
+List mkList() {
   List result = malloc(sizeof(struct list));
   if (result != NULL) {
     result->first = NULL;
@@ -73,9 +73,9 @@ void prepend(List list, int value) {
 
 void append(List list, int value){ 
   if (list->last == NULL) {
-    list->last = list->first =mkLink(value, NULL);
+    list->last = list->first = mkLink(value, NULL);
   }else{
-    list->last = list->last->next = mklink(value, NULL);
+    list->last = list->last->next = mkLink(value, NULL);
   }
 }
 
@@ -83,7 +83,7 @@ int *first(List list) {
   if(empty(list)) {
     return NULL;
   }else{
-    return &(list->last->value);
+    return &(list->first->value);
   }
 }
 
@@ -97,10 +97,23 @@ int *last(List list) {
 
 int *get(List list, int index) {
   struct link *cursor = list->first;
-  while (cursor && index > 0) {
-    if (index == 0) return &(cursor->value);
-    cursor = cursor->next;
+  for (int i = 0;i <= index;i++) {
+      if (i == index)
+          return &(cursor->value);
+      else
+          cursor = cursor->next;
   }
-  return NULL;
 }
 
+/*
+int main(void) {
+    List l = mkList();
+    append(l,1);
+    append(l,2);
+    append(l,3);
+    for (int i = 0;i < length(l);i++) {
+        printf("Element %d has a value of %d\n",i,get(l,i));
+    }
+    printf("First element is %d\n Last element is %d\n",*first(l),*last(l));
+}
+*/
