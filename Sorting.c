@@ -10,17 +10,17 @@
 #define MAX_SIZE 100
 
 //Calculate the size of the header
-<<<<<<< HEAD
+
 
 int get_header_size(char * header) {
   int size = 0;
   for (int i = 5; i < 10; i++){
     header[i] = header[i] & 127;
     size += header[i];
-    // if (i < 9)
-      size = size << 7
-  
-}
+    if (i < 9)
+      size = size << 7;
+  }
+  printf("%d", size);
   return size;
 
 }
@@ -45,7 +45,7 @@ void search_frames(int size, char* frames) {
   for (int i = 0; i < size; i++) {
     if (frames[i] == 'T' && frames[i+1] == 'P' && frames[i+2] == 'E' && frames[i+3] == '1') {
       int frame_size = 0;
-      i += 4;
+      i += 4; 
       frame_size += frames[i] & 127;
       frame_size = frame_size << 7;
 
@@ -56,11 +56,12 @@ void search_frames(int size, char* frames) {
       frame_size = frame_size << 7;
 
       frame_size += frames[i+3] & 127;
+      puts("Hejsan");
       //frame_size += byte4;
       i += 7  ;//+7 för att hoppa över storleks bytes, flaggor och textencoding
       printf("Artists name is: ");
       for (int j = 0;j <= frame_size-3; j++) {//3 för att jag har hoppat över 3 flaggor
-		    printf("%c", frames[i+j]?frames[i+j]:'#');
+		    printf("%c", frames[i+j]);
       }
       puts("\n");
     }
@@ -85,20 +86,12 @@ void sort_file(char file_name[]) {
   }
  
   get_header(infile,header);
-
-  //Value
-  //header_size = sum_header_size(header,header_size);
-
-  //Reference
-  sum_header_size2(header,&header_size);
-  
-  
-  
+  get_header_size(header);
   char frames[header_size];
   load_frames(infile,frames,header_size);
-  //printf("%c%c%c\n",frames[0],frames[1],frames[2]);
-  //  printf("%d",header_size);
-  //  struct song s;
+  //  printf("%c%c%c\n",frames[0],frames[1],frames[2]);
+  //    printf("%d",header_size);
+    //  struct song s;
   search_frames(header_size,frames);
 
   fclose(infile);
