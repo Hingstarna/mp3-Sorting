@@ -7,17 +7,17 @@ struct Song {
   char *title;
   char *year;
 };
-typedef struct Song song;
+typedef struct Song *Song;
 
-song *create_song(char *artist, char *album, char *title, char *year);
+Song create_song(char *artist, char *album, char *title);
 
 
 
-void destroy_song(song *s);
+void destroy_song(Song s);
 
-char *get_artist(song *s);
-char *get_album(song *s);
-char *get_title(song *s);
-char *get_year(song *s);
+char *song_get_artist(Song s);
+char *song_get_album(Song s);
+char *song_get_title(Song s);
+char *song_get_year(Song s);
 
 #endif // SONG_H

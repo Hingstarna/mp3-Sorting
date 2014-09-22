@@ -1,32 +1,29 @@
 #include "Song.h"
-song* create_song(char *artist, char *album, char *title, char *year) {
-  song *s = malloc(sizeof(song));
-  memset(s,0,sizeof(struct Song));
+Song create_song(char *artist, char *album, char *title) {
+  Song s = malloc(sizeof(Song));
   
-  s->artist = malloc(*artist);
-  s->album  = malloc(*album);
-  s->title  = malloc(*title);
-  s->year   = malloc(*year);
+  s->artist = artist;
+  s->album  = album;
+  s->title  = title;
 
   return s;
 }
-void destroy_song(song *s) {
+void destroy_song(Song s) {
   free(s->artist);
   free(s->album);
   free(s->title);
-  free(s->year);
   free(s); 
 }
 
-char * get_artist(song *s) {
+char *song_get_artist(Song s) {
   return s->artist;
 }
-char *get_album(song *s) {
+char *song_get_album(Song s) {
   return s->album;
 }
-char *get_title(song *s) {
+char *song_get_title(Song s) {
   return s->title;
 }
-char *get_year(song *s) {
+char *song_get_year(Song s) {
   return s->year;
 }

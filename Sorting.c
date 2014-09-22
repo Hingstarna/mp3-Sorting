@@ -41,7 +41,10 @@ void load_frames(FILE* infile, char* frames, int size) {
 	}
 }
 
-void search_frames(int size, char* frames) {
+Song search_frames(int size, char* frames) {
+	char *artist_pointer;
+	char *album_pointer;
+	char *title_pointer;
 	for (int i = 0; i < size; i++) {
 		if (frames[i] == 'T' && frames[i+1] == 'P' && frames[i+2] == 'E' && frames[i+3] == '1') {
 			int frame_size = 0;
@@ -60,13 +63,13 @@ void search_frames(int size, char* frames) {
 			//frame_size += byte4;
 			i += 7  ;//+7 för att hoppa över storleks bytes, flaggor och textencoding
 			printf("Artists name is: ");
-			char artist[frame_size-3];
+			artist_pointer = malloc(frame_size-3);
 			for (int j = 0;j <= frame_size-3; j++) {//3 för att jag har hoppat över 3 flaggor
 				printf("%c", frames[i+j]);
-				artist[j] = frames[i+j];
+				artist_pointer[j] = frames[i+j];
 			}
 			puts("\n");
-	} 
+		} 
 		
 		if (frames[i] == 'T' && frames[i+1] == 'A' && frames[i+2] == 'L' && frames[i+3] == 'B') {
 			int frame_size = 0;
@@ -84,10 +87,10 @@ void search_frames(int size, char* frames) {
 
 			i += 7;
 			printf("Album name is: ");
-			char album[frame_size-3];
+			album_pointer = malloc(frame_size-3);
 			for (int j = 0; j <= frame_size-3; j++) {
 				printf("%c", frames[i+j]);
-				album[j] = frames[i+j];
+				album_pointer[j] = frames[i+j];
 			}
 			puts("\n");
 		}
@@ -107,14 +110,17 @@ void search_frames(int size, char* frames) {
 			
 			i += 7;
 			printf("Song name is: ");
-			char title[frame_size-3];
+			title_pointer = malloc(frame_size-3);
 			for (int j = 0; j <= frame_size-3; j++) {
-				title[j] = frames[i+j];
+				title_pointer[j] = frames[i+j];
 				printf("%c", frames [i+j]);
 			}
 			puts("\n");
 		}
 	}
+	
+	
+	Song song = create_song(artist_pointer, album_pointer, title_pointer);
 }
 
 //Sorts mp3 files och så.
@@ -138,8 +144,7 @@ void sort_file(char file_name[]) {
 	//printf("%c%c%c\n",frames[0],frames[1],frames[2]);
 	//    printf("%d",header_size);
 		//  struct song s;
-	search_frames(header_size,frames);
-
+	Song song = search_frames(header_size,frames);
 	fclose(infile);
 }
 
