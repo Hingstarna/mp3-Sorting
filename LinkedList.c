@@ -21,7 +21,7 @@ struct link *link_create(void *value, struct link *next) {
   return NULL;
 }
 
-unsigned int length(List list) {
+unsigned int list_length(List list) {
   unsigned int size = 0;
   struct link *cursor = list->first;
   while (cursor != NULL) {
@@ -31,36 +31,36 @@ unsigned int length(List list) {
   return size;
 }
 
-int empty(List list) {
+int list_empty(List list) {
   return list->first == NULL;
 
 }
 
-void inject(struct link *link, void *value) {
+void list_inject(struct link *link, void *value) {
   link->next = link_create(value, link->next);
 }
 
 
-void insert(List list, void *value, int index) {
+void list_insert(List list, void *value, int index) {
   if (index == 0) {
-    prepend(list, value);
+    list_prepend(list, value);
     return;
   }
   struct link *cursor = list->first;
   while (cursor) {
-    if (index-- == 1) inject(cursor, value);
+    if (index-- == 1) list_inject(cursor, value);
     cursor = cursor->next;
   }
 }
 
-void prepend(List list, void *value) {
-  list->first = list_create(value, list->first);
+void list_prepend(List list, void *value) {
+  list->first = link_create(value, list->first);
     if (list->last == NULL) {
       list->last = list->first;
     }
 }  
 
-void append(List list, void *value){ 
+void list_append(List list, void *value){ 
   if (list->last == NULL) {
     list->last = list->first = link_create(value, NULL);
   }else{
@@ -68,23 +68,23 @@ void append(List list, void *value){
   }
 }
 
-void *first(List list) {
-  if(empty(list)) {
+void *list_first(List list) {
+  if(list_empty(list)) {
     return NULL;
   }else{
     return list->first->value;
   }
 }
 
-void *last(List list) {
-  if(empty(list)) {
+void *list_last(List list) {
+  if(list_empty(list)) {
     return NULL;
   }else{
     return list->last->value;
   }
 }
 
-void *get(List list, int index) {
+void *list_get(List list, int index) {
   struct link *cursor = list->first;
   for (int i = 0;i <= index;i++) {
       if (i == index)

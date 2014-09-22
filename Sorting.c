@@ -124,7 +124,7 @@ Song search_frames(int size, char* frames) {
 }
 
 //Sorts mp3 files och så.
-void sort_file(char file_name[]) {
+Song sort_file(char file_name[]) {
 
 	
 	FILE* infile;
@@ -145,7 +145,9 @@ void sort_file(char file_name[]) {
 	//    printf("%d",header_size);
 		//  struct song s;
 	Song song = search_frames(header_size,frames);
+	
 	fclose(infile);
+	return song;
 }
 
 void read_dir(char* path) {
@@ -161,8 +163,9 @@ void read_dir(char* path) {
 }
 
 int main(void) {
+	List list = list_create();
 	char name[10] = "music0.mp3";
-	sort_file(name);
+	list_append(list,sort_file(name));
 	//read_dir("/home/micael/Downloads/");
 	return 0;
 }

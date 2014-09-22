@@ -17,22 +17,22 @@ List list_create();
 
 struct link *link_create(void *value, struct link *next);
 
-unsigned int length(List list);
+unsigned int list_length(List list);
 
-int empty(List list);
+int list_empty(List list);
 
-void inject(struct link *link, void *value);
+void list_inject(struct link *link, void *value);
 
 
-void insert(List list, void *value, int index);
+void list_insert(List list, void *value, int index);
 
-void prepend(List list, void *value);  
+void list_prepend(List list, void *value);  
 
-void append(List list, void *value);
+void list_append(List list, void *value);
 
-void *first(List list);
+void *list_first(List list);
 
-void *last(List list);
+void *list_last(List list);
 
-void *get(List list, int index);
+void *list_get(List list, int index);
 #endif // __LINKEDLIST_H__
