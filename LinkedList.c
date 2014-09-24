@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include "LinkedList.h"
 
+/**
+*Returns a pointer to a new, empty list.
+*/
 List list_create() {
   List result = malloc(sizeof(struct list));
   if (result != NULL) {
@@ -21,6 +24,9 @@ struct link *link_create(void *value, struct link *next) {
   return NULL;
 }
 
+/**
+* Returns the length of a list represented as an unsigned integer.
+*/
 unsigned int list_length(List list) {
   unsigned int size = 0;
   struct link *cursor = list->first;
@@ -31,6 +37,9 @@ unsigned int list_length(List list) {
   return size;
 }
 
+/**
+* Returns true if list is empty else false
+*/
 int list_empty(List list) {
   return list->first == NULL;
 
@@ -40,7 +49,9 @@ void list_inject(struct link *link, void *value) {
   link->next = link_create(value, link->next);
 }
 
-
+/**
+* Inserts value in list at the specified index.
+*/
 void list_insert(List list, void *value, int index) {
   if (index == 0) {
     list_prepend(list, value);
@@ -53,13 +64,18 @@ void list_insert(List list, void *value, int index) {
   }
 }
 
+/**
+* Inserts value at the start of the list
+*/
 void list_prepend(List list, void *value) {
   list->first = link_create(value, list->first);
     if (list->last == NULL) {
       list->last = list->first;
     }
 }  
-
+/**
+* Inserts value at the end of the list
+*/
 void list_append(List list, void *value){ 
   if (list->last == NULL) {
     list->last = list->first = link_create(value, NULL);
@@ -67,7 +83,9 @@ void list_append(List list, void *value){
     list->last = list->last->next = link_create(value, NULL);
   }
 }
-
+/**
+* Returns a pointer to the first element of the list.
+*/
 void *list_first(List list) {
   if(list_empty(list)) {
     return NULL;
@@ -76,6 +94,9 @@ void *list_first(List list) {
   }
 }
 
+/**
+* Returns a pointer to the last element of the list.
+*/
 void *list_last(List list) {
   if(list_empty(list)) {
     return NULL;
@@ -84,6 +105,9 @@ void *list_last(List list) {
   }
 }
 
+/**
+* Returns a pointer to the value at the specified index in the list.
+*/
 void *list_get(List list, int index) {
   struct link *cursor = list->first;
   for (int i = 0;i <= index;i++) {
