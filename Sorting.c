@@ -62,10 +62,10 @@ Song search_frames(int size, char* frames) {
 
 			//frame_size += byte4;
 			i += 7  ;//+7 för att hoppa över storleks bytes, flaggor och textencoding
-			printf("Artists name is: ");
+			//printf("Artists name is: ");
 			artist_pointer = malloc(frame_size-3);
 			for (int j = 0;j <= frame_size-3; j++) {//3 för att jag har hoppat över 3 flaggor
-				printf("%c", frames[i+j]);
+				////printf("%c", frames[i+j]?frames[i+j]:'#');
 				artist_pointer[j] = frames[i+j];
 			}
 			puts("\n");
@@ -86,10 +86,10 @@ Song search_frames(int size, char* frames) {
 			frame_size += frames[i+3] & 127;
 
 			i += 7;
-			printf("Album name is: ");
+			//printf("Album name is: ");
 			album_pointer = malloc(frame_size-3);
 			for (int j = 0; j <= frame_size-3; j++) {
-				printf("%c", frames[i+j]);
+				////printf("%c", frames[i+j]?frames[i+j]:'#');
 				album_pointer[j] = frames[i+j];
 			}
 			puts("\n");
@@ -109,11 +109,11 @@ Song search_frames(int size, char* frames) {
 			frame_size += frames[i+3] & 127;
 			
 			i += 7;
-			printf("Song name is: ");
+			//printf("Song name is: ");
 			title_pointer = malloc(frame_size-3);
 			for (int j = 0; j <= frame_size-3; j++) {
 				title_pointer[j] = frames[i+j];
-				printf("%c", frames [i+j]);
+				//printf("%c", frames[i+j]?frames[i+j]:'#');
 			}
 			puts("\n");
 		}
@@ -121,6 +121,9 @@ Song search_frames(int size, char* frames) {
 	
 	
 	Song song = create_song(artist_pointer, album_pointer, title_pointer);
+	free(artist_pointer);
+	free(album_pointer);
+	free(title_pointer);
 }
 
 //Sorts mp3 files och så.
@@ -149,24 +152,27 @@ Song sort_file(char file_name[]) {
 	fclose(infile);
 	return song;
 }
-
-void read_dir(char* path) {
-	DIR* d = opendir(path);
-	struct dirent *dir;
-
-	if (d) {
-		while ((dir = readdir(d)) != NULL) {
-			printf("%s\n",dir->d_name);
-		}
-	} else {puts("fel");}
-	closedir(d);
+void print_string(char *str) {
+	for (int i = 0; i < strlen(str);i++) {
+		printf("%c",str[i]);
+	}
 }
-
-int main(void) {
+int main(int argc, char const *argv[])
+{
 	List list = list_create();
 	char name[10] = "music0.mp3";
-	list_append(list,sort_file(name));
+	
+	
+	Song s = sort_file(name);
+	list_append(list, s);
+
+	char *artist = song_get_artist(s);
+	for (int i = 0; i < strlen(artist); i++) {
+		printf("%c", artist[i]);
+	}
+	puts("\n");
 	//read_dir("/home/micael/Downloads/");
+
 	return 0;
 }
 

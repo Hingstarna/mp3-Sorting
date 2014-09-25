@@ -2,9 +2,13 @@
 #define SONG_H
 
 struct Song {
+	///Name of artist
   char *artist; //fix size later
+  	///Name of album
   char *album;
+  	///Name of title
   char *title;
+  	///Year
   char *year;
 };
 typedef struct Song *Song;
